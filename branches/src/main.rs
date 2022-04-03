@@ -91,3 +91,17 @@ fn _test_expression(x: u8) -> String {
 
     String::from(x)
 }
+
+// temperature conversion: Fahrenheit <-> Celsius
+// fn temp_conversion(temp: String) -> String {
+
+// }
+
+// Fibonacci generator
+// fn fibonacci(n: usize) -> usize {
+//     if n == 0 {
+
+//     }
+// }
+
+// "The Twelve Days of Christmas" generator
