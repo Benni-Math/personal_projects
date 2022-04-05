@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-# Where are the Rustlings?
-Check the Rustlings branch for my work on the exercises.
+Please go to the [Rustlings Official GitHub](https://github.com/rust-lang/rustlings)
 =======
 # rustlings 🦀❤️
 
