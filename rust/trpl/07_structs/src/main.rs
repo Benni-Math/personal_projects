@@ -1,39 +1,21 @@
-struct User {
-    active: bool,
-    username: String,
-    email: String,
-    sign_in_count: u64,
+// area_struct.rs
+struct Rectangle {
+    width: u32,
+    height: u32,
 }
+
 fn main() {
-    // Initializing and building the User struct
-    let user1_email = String::from("benni@bu.edu");
-    let user1_name = String::from("Benni");
-    let user1 = build_user(user1_email, user1_name);
-
-    if user1.active {
-        println!("Welcome {}!", user1.username);
-        println!("\tEmail: {}", user1.email);
-        println!("\tSign-in Count: {}", user1.sign_in_count);
-    } 
-
-    // Struct update syntax
-    let user2 = User {
-        email: String::from("ben-new-email@gmail.com"),
-        ..user1
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
     };
 
-    if user2.active {
-        println!("Welcome {}!", user2.username);
-        println!("\tEmail: {}", user2.email);
-        println!("\tSign-in Count: {}", user2.sign_in_count);
-    } 
+    println!(
+        "The area of the rectangle is {} square pixels.",
+        area(&rect1)
+    );
 }
 
-fn build_user(email: String, username: String) -> User {
-    User { 
-        email,
-        username,
-        active: true, 
-        sign_in_count: 1 
-    }
+fn area(rectangle: &Rectangle) -> u32 {
+    rectangle.width * rectangle.height
 }
