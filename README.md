@@ -1,6 +1,9 @@
 # Ben's Personal Projects
 
 This is a repo for most of my personal projects. 
+
+Currently having some local machine issues...
+
 Here is an outline of the folder system.
 
 (TODO: add table of contents here)
