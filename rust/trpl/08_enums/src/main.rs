@@ -1,5 +1,5 @@
 // Enums allow restrictions on what can be set
-// For pattern matching and slight variations in struct
+// For pattern matching and enumerating options
 
 // First pattern (bad):
 /**
@@ -69,17 +69,50 @@ fn main() {
 
     println!("\nV4 IP address: {:?}", home);
     // dbg!(home);
-    println!("\nV6 IP address: {:?}", loopback);
+    println!("V6 IP address: {:?}", loopback);
     // dbg!(loopback);
 
+    // Matching Coins
+    let lincoln = Coin::Penny;
+    println!("\nA penny is worth {} cents", value_in_cents(lincoln));
+    let jefferson = Coin::Nickel;
+    println!("A Nickel is worth {} cents", value_in_cents(jefferson));
+    let roosevelt = Coin::Dime;
+    println!("A dime is worth {} cents", value_in_cents(roosevelt));
+    let washington = Coin::Quarter;
+    println!("A quarter is worth {} cents", value_in_cents(washington));
+
     //Using the Option<T> enum
+    // let some_string = Some("a string");
     let some_number = Some(5);
-    let some_string = Some("a string");
 
     let absent_number: Option<i32> = None;
 
     let six = plus_one(some_number);
     let none = plus_one(absent_number);
 
-    println!("Matching with Option<T>: {:?}, {:?}", six, none);
+    println!("\nMatching with Option<T>: {:?}, {:?}", six, none);
 }
+
+// Catch-all patterns
+fn _dice_game() {
+    let dice_roll: u8 = 9;
+    match dice_roll {
+        3 => _add_fancy_hat(),
+        7 => _remove_fancy_hat(),
+        _ => _reroll(),
+    }
+    
+    // Or
+    match dice_roll {
+        3 => _add_fancy_hat(),
+        7 => _remove_fancy_hat(),
+        other => _move_player(other),
+    }
+}
+
+// empty function for illustration
+fn _add_fancy_hat() {}
+fn _remove_fancy_hat() {}
+fn _reroll() {}
+fn _move_player(_other: u8) {}
