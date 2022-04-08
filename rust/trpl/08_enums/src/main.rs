@@ -92,6 +92,22 @@ fn main() {
     let none = plus_one(absent_number);
 
     println!("\nMatching with Option<T>: {:?}, {:?}", six, none);
+
+    // If-let
+    let config_max = Some(3u8);
+    if let Some(max) = config_max {
+        println!("The maximum is configured to be {}", max);
+    }
+
+    // or
+    let mut count = 0;
+    let coin = Coin::Quarter;
+    if let Coin::Penny = coin {
+        println!("Lucky penny!");
+    } else {
+        count += value_in_cents(coin);
+    }
+    println!("Total change in your pocket: {}", count);
 }
 
 // Catch-all patterns
