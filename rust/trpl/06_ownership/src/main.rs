@@ -57,14 +57,58 @@ fn change(some_string: &mut String) {
  */
 
  // Slices
- fn first_word(s: &String) -> usize {
-     let bytes = s.as_bytes();
+fn _why_slice() {
+    let mut s = String::from("hello world");
 
-     for (i, &item) in bytes.iter().enumerate() {
-         if item == b' ' {
-             return i;
-         }
-     }
+    let _word = _first_word(&s); //word = 5
+
+    s.clear(); //'word' is now meaningless, as we changed s
+    // so, we want something that will _refer_ to a portion of s
+    // here is where slices come in
+}
+
+ fn _first_word(s: &String) -> usize {
+    let bytes = s.as_bytes();
+
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return i;
+        }
+    }
      
-     s.len()
+    s.len()
  }
+
+ fn _slice_eg() {
+    let s  = String::from("hello world");
+
+    let _hello = _first_word_slice(&s);
+    let _world = &s[6..11];
+
+    //s.clear(); //error!
+    // mutable borrow occurs here
+
+    println!("The first word is: {}", _hello);
+    // immutable borrow used later
+ }
+
+ fn _first_word_slice(s: &String) -> &str {
+    let bytes = s.as_bytes();
+
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[0..i];
+        }
+    }
+    
+    &s[..]
+ }
+
+ /*
+  * More general slices can occur 
+  * -- anything with a first element and a length (vectors, Ch8.)
+  * For example,
+  *     let a = [1, 2, 3, 4, 5];
+  *     let slice = &a[1..3];
+  *     assert_eq!(slice, &[2, 3]); 
+  */
