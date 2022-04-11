@@ -1,0 +1,9 @@
+version: "1.0"
+services:
+  whatabyte:
+    build: ./whatabyte-portal
+    ports:
+      - "8000:8000"
+    volumes:
+      - './whatabyte-portal:/app'
+      - /app/node_modules/
