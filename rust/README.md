@@ -5,4 +5,4 @@ The root folder for my Rust projects
 Files and exercises which I created while working through the Rust Programming Language book.
 
 ## Rustlings
-Checkout this repo (insert link here)!
+Checkout the official repo! Use `docker compose up` to run my exercises so far.
