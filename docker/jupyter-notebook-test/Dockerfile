@@ -11,4 +11,4 @@ RUN pip3 install -r requirements.txt
 
 # EXPOSE 8888
 
-CMD ["jupyter", "notebook","--ip", "0.0.0.0", "--no-browser", "--allow-root"]
+CMD ["jupyter", "notebook","--ip", "0.0.0.0", "--no-browser", "--allow-root", "--NotebookApp.token=abcd"]
