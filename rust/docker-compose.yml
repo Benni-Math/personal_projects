@@ -1,0 +1,13 @@
+version: '2.2'
+
+services:
+  rustlings:
+    image: rust:1.59
+    stdin_open: true
+    tty: true
+    working_dir: /usr/src/rustlings
+    volumes:
+      - './rustlings:/usr/src/rustlings'
+    command: >
+      bash -c "cargo install --force --path .
+      && rustlings watch"
