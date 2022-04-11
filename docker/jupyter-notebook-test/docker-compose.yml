@@ -1,0 +1,11 @@
+version: '2.0'
+
+services:
+  caries:
+    build: .
+    ports:
+      - "8888:8888"
+    stdin_open: true
+    tty: true
+    volumes:
+      - './container-notebooks:/notebooks'
