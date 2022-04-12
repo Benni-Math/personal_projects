@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  client:
+    build: ./client
+    ports:
+      - "8080:8080"
+    container_name: vue-ui
+    volumes:
+       - ./my-app:/usr/src/app/my-app
+       - /usr/src/app/my-app/node_modules
+  server:
+    build:
+      context: ./api
+      dockerfile: Dockerfile-dev
+    ports:
+      - "3080:3080"
+    container_name: node-api
+    volumes:
+       - ./api:/usr/src/app/api
+       - /usr/src/app/api/node_modules
+  canvas:
+    build: ./canvas
+    ports:
+      - "8088:8088"
+    container_name: caccl-api
+  mongodb:
+    build:
+    

@@ -9,6 +9,7 @@ services:
     tty: true
     volumes:
       - './app-name:/dev/app-name' #change app-name accordingly
+      - /dev/app-name/node_modules
     command: >
       bash -c "cd /dev/app-name/
       && npm install

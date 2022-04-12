@@ -11,7 +11,6 @@ services:
       - './app:/dev/angular-app'
       - /dev/angular-app/node_modules
     command: >
-      bash -c "npm install -g @angular/cli
-      && ng new angular-app --defaults --directory ./angular-app
+      bash -c "ng new angular-app --defaults --directory ./angular-app
       && cd /dev/angular-app/
       && ng serve --host 0.0.0.0"

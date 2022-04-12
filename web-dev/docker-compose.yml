@@ -1,9 +1,20 @@
-version: "1.0"
+# version: "1.0"
+# services:
+#   whatabyte:
+#     build: ./whatabyte-portal
+#     ports:
+#       - "8000:8000"
+#     volumes:
+#       - './whatabyte-portal:/app'
+#       - /app/node_modules/
+
 services:
-  whatabyte:
-    build: ./whatabyte-portal
+  vue-project:
+    build: ./vue-project
     ports:
-      - "8000:8000"
+      - "3003:3000"
+    stdin_open: true
+    tty: true
     volumes:
-      - './whatabyte-portal:/app'
-      - /app/node_modules/
+      - './vue-project:/app'
+      - /app/node_modules
