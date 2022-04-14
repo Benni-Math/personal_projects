@@ -1,8 +1,9 @@
 FROM node:latest
 
-WORKDIR /app/src/
+WORKDIR /app/
 
-COPY package*.json ./
+COPY ./app-name/package*.json ./
+COPY ./app-name/config ./
 
 RUN npm install
 

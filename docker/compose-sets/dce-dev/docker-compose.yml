@@ -1,29 +1,53 @@
 version: '3'
 
 services:
-  client:
-    build: ./client
-    ports:
-      - "8080:8080"
-    container_name: vue-ui
-    volumes:
-       - ./my-app:/usr/src/app/my-app
-       - /usr/src/app/my-app/node_modules
-  server:
-    build:
-      context: ./api
-      dockerfile: Dockerfile-dev
-    ports:
-      - "3080:3080"
-    container_name: node-api
-    volumes:
-       - ./api:/usr/src/app/api
-       - /usr/src/app/api/node_modules
   canvas:
-    build: ./canvas
+    build: 
+      context: .
+      dockerfile: Dockerfile-canvas
     ports:
       - "8088:8088"
     container_name: caccl-api
-  mongodb:
-    build:
+    networks:
+      - dce-net
+    volumes:
+      - './app-name/:/app/'
+      - /app/server
+      - /app/client
+      - /app/node_modules
+    stdin_open: true
+    tty: true
+  
+  client:
+    build: 
+      context: .
+      dockerfile: Dockerfile-client
+    ports:
+      - "3000:3000"
+    container_name: react-ui
+    networks:
+      - dce-net
+    volumes:
+       - './app-name/client:/app/client'
+       - /app/client/node_modules
+    stdin_open: true
+    tty: true
+
+  server:
+    build: 
+      context: .
+      dockerfile: Dockerfile-server
+    ports:
+      - "3080:3080"
+    container_name: node-server
+    networks:
+      - dce-net
+    volumes:
+       - './app-name/server:/app/server'
+       - /app/server/node_modules
+
+
+networks:
+  dce-net:
+    driver: bridge
     
