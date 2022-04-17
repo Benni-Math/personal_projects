@@ -2,52 +2,18 @@ version: '3'
 
 services:
   canvas:
-    build: 
-      context: .
-      dockerfile: Dockerfile-canvas
+    image: node:latest
+    working_dir: /app/
     ports:
-      - "8088:8088"
-    container_name: caccl-api
-    networks:
-      - dce-net
+      - "127.0.0.1:8088:8088"
+      - "127.0.0.1:8080:8080"
+      - "127.0.0.1:3000:3000"
     volumes:
-      - './app-name/:/app/'
-      - /app/server
-      - /app/client
-      - /app/node_modules
+      - './harvard-hello/:/app/' #TODO: change app-name
     stdin_open: true
     tty: true
-  
-  client:
-    build: 
-      context: .
-      dockerfile: Dockerfile-client
-    ports:
-      - "3000:3000"
-    container_name: react-ui
-    networks:
-      - dce-net
-    volumes:
-       - './app-name/client:/app/client'
-       - /app/client/node_modules
-    stdin_open: true
-    tty: true
-
-  server:
-    build: 
-      context: .
-      dockerfile: Dockerfile-server
-    ports:
-      - "3080:3080"
-    container_name: node-server
-    networks:
-      - dce-net
-    volumes:
-       - './app-name/server:/app/server'
-       - /app/server/node_modules
-
-
-networks:
-  dce-net:
-    driver: bridge
+    command: >
+      bash -c "npm run dev:canvas
+      & npm run dev:server
+      & npm run dev:client"
     
