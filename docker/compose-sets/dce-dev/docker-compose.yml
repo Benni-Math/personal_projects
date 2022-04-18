@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  canvas:
+    image: node:latest
+    working_dir: /app/
+    ports:
+      - "127.0.0.1:8088:8088"
+      - "127.0.0.1:8080:8080"
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - './harvard-hello/:/app/' #TODO: change app-name
+    stdin_open: true
+    tty: true
+    command: >
+      bash -c "npm run dev:canvas
+      & npm run dev:server
+      & npm run dev:client"
+    

@@ -1,0 +1,17 @@
+# Use this to load and run a node project
+services:
+  angular-app: #change this name
+    image: node:latest
+    working_dir: /dev
+    ports:
+      - "127.0.0.1:3000:3000" #change port appropiately
+    stdin_open: true
+    tty: true
+    volumes:
+      - './app-name:/dev/app-name' #change app-name accordingly
+      - /dev/app-name/node_modules
+    command: >
+      bash -c "cd /dev/app-name/
+      && npm install
+      && npm run dev"
+    # need to set a "dev" script in the package.json
