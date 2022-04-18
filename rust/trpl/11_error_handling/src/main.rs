@@ -17,7 +17,7 @@ fn main() {
     // Using the Results type:
     let f = File::open("hello.txt");
 
-    let f = match f {
+    let _f = match f {
         Ok(file) => file,
         Err(error) => match error.kind() {
             ErrorKind::NotFound => match File::create("hello.txt") {
@@ -29,4 +29,12 @@ fn main() {
             }
         }
     }; // Notice that Ok and Err are already in scope (from the prelude)
+
+    // Instead of nesting matches, we can use closures with unwrap_or_else (see later chapters)
+    // Or, we can use .unwrap():
+    //      let f = File::open("hello.txt").unwrap();
+    // This will execute a panic! if the Result is an Err, and will 'unwrap' the Ok if there is no error
+    // Similarly, we can use .expect():
+    //      let f = File::open("hello.txt").expect("Failed to open hello.txt");
+    // This allows us to more easily label errors
 }
