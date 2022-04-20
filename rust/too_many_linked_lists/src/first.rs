@@ -1,7 +1,12 @@
-// pub enum List {
-//     Empty,
-//     Elem(i32, Box<List>),
-// }
+// The idea from functional programming: 
+//      List a = Empty | Elem a (List a)
+// The naive Rust implementation:
+//      pub enum List {
+//          Empty,
+//          Elem(i32, Box<List>),
+//      }
+
+// A slightly less naive implementation:
 pub struct List {
     head: Link
 }
