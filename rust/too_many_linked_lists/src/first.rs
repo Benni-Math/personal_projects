@@ -60,11 +60,11 @@ impl List {
 impl Drop for List {
     fn drop(&mut self) {
         let mut cur_link = mem::replace(&mut self.head, Link::Empty);
-        // Need to understand 'while let'
+        //TODO: Need to understand 'while let'
         while let Link::More(mut boxed_node) = cur_link {
             cur_link = mem::replace(&mut boxed_node.next, Link::Empty);
         }
-        // Draw out what's hapenning with the pointers
+        //TODO: Draw out what's happening with the pointers
     }
 }
 
