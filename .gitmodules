@@ -1,0 +1,6 @@
+[submodule "fp-ts/mostly-adequate-guide"]
+	path = fp-ts/mostly-adequate-guide
+	url = https://github.com/Benni-Math/mostly-adequate-guide.git
+[submodule "fp-ts/type-challenges"]
+	path = fp-ts/type-challenges
+	url = https://github.com/Benni-Math/type-challenges.git
