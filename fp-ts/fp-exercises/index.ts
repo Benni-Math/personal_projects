@@ -1,0 +1,1 @@
+// The idea is to have tests for the separate exercises in this file
