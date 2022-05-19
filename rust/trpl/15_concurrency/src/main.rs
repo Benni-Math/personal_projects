@@ -3,6 +3,7 @@ use concurrency::{
     move_semantics,
     channel_demo,
     cloning_transmitters,
+    mutex_demo,
 };
 fn main() {
     println!("\nUsing two threads:");
@@ -16,4 +17,7 @@ fn main() {
 
     println!("\nSending messages from multiple threads:");
     cloning_transmitters();
+
+    println!("\nA mutex demo:");
+    mutex_demo();
 }
