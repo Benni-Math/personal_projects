@@ -4,6 +4,7 @@ use concurrency::{
     channel_demo,
     cloning_transmitters,
     mutex_demo,
+    deadlock_demo,
 };
 fn main() {
     println!("\nUsing two threads:");
@@ -20,4 +21,7 @@ fn main() {
 
     println!("\nA mutex demo:");
     mutex_demo();
+
+    println!("\nFinally, here is a deadlock demo:");
+    deadlock_demo();
 }
