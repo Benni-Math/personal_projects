@@ -14,7 +14,9 @@ impl Post {
     }
 
     pub fn add_text(&mut self, text: &str) {
-        self.content.push_str(text);
+        if self.state.as_ref().unwrap().can_add() {
+            self.content.push_str(text);
+        }
     }
 
     pub fn content(&self) -> &str {
@@ -37,8 +39,12 @@ impl Post {
 trait State {
     fn request_review(self: Box<Self>) -> Box<dyn State>;
     fn approve(self: Box<Self>) -> Box<dyn State>;
+    fn reject(self: Box<Self>) -> Box<dyn State>;
     fn content<'a>(&self, post: &'a Post) -> &'a str {
         ""
+    }
+    fn can_add(&self) -> bool {
+        false
     }
 }
 
@@ -52,6 +58,14 @@ impl State for Draft {
     fn approve(self: Box<Self>) -> Box<dyn State> {
         self
     }
+
+    fn reject(self: Box<Self>) -> Box<dyn State> {
+        self
+    }
+
+    fn can_add(&self) -> bool {
+        true
+    }
 }
 
 struct PendingReview {}
@@ -64,6 +78,10 @@ impl State for PendingReview {
     fn approve(self: Box<Self>) -> Box<dyn State> {
         Box::new(Published {})
     }
+    
+    fn reject(self: Box<Self>) -> Box<dyn State> {
+        Box::new(Draft {})
+    }
 }
 
 struct Published {}
@@ -74,6 +92,10 @@ impl State for Published {
     }
 
     fn approve(self: Box<Self>) -> Box<dyn State> {
+        self
+    }
+
+    fn reject(self: Box<Self>) -> Box<dyn State> {
         self
     }
 
