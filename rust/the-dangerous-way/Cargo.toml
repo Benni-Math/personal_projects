@@ -1,0 +1,12 @@
+[package]
+name = "nbody"
+version = "0.1.0"
+authors = ["Cliff L. Biffle <code@cliffle.com>"]
+edition = "2018"
+
+[dependencies]
+
+[profile.release]
+opt-level = 3
+codegen-units = 1
+debug = 2
