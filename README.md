@@ -2,17 +2,16 @@
 
 This is a repo for most of my personal projects. 
 
-Currently having some local machine issues...
- - Need to rebase off master once html and debug files have been handled
- - Python and pip installation issues
- - Want to start containerizing everything
+Here is an outline of the folder system (in alphabetical order)
 
-Here is an outline of the folder system.
+## docker
+Folder for learning Docker. Contains a couple docker-compose files for different project types. Currently not really in use.
 
-(TODO: add table of contents here)
+## fp-ts
+Collection of work on functional programming with TypeScript (and JS). Newest folder.
 
-## Rust
-Folder for learning Rust (hopefully some projects in the future).
+## rust
+Folder for learning Rust along with some small projects. Current most active folder.
 
-## Docker
-Folder for learning Docker -- contains some Python projects.
+## web-dev
+General collection of small web-dev projects. Currently less in use.
