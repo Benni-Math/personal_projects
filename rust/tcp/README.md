@@ -20,4 +20,6 @@ create a Docker container to test this.
 
  - For the Docker container, we will extend the generic Rust
    [image](https://hub.docker.com/_/rust) 
+    - Currently having issues with musl
+    - Keep getting 'is `aarch64-linux-musl-gcc` installed?'
 
