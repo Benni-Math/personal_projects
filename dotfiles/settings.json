@@ -1,0 +1,56 @@
+{
+    "editor.minimap.enabled": false,
+    "workbench.colorTheme": "Dracula Refined",
+    "workbench.iconTheme": "vscode-great-icons",
+    "files.autoSave": "afterDelay",
+    "files.eol": "\n",
+    "editor.tabSize": 2,
+    "emmet.showExpandedAbbreviation": "inMarkupAndStylesheetFilesOnly",
+    "typescript.preferences.quoteStyle": "single",
+    "peacock.favoriteColors": [
+        {
+            "name": "Mandalorian Blue",
+            "value": "#1857a4"
+        },
+        {
+            "name": "Node Green",
+            "value": "#215732"
+        },
+        {
+            "name": "React Blue",
+            "value": "#61dafb"
+        },
+    ],
+    "vim.easymotion": true,
+    "vim.incsearch": true,
+    "vim.useSystemClipboard": true,
+    "vim.useCtrlKeys": true,
+    "vim.hlsearch": true,
+    "vim.insertModeKeyBindings": [
+      {
+        "before": ["j", "j"],
+        "after": ["<Esc>"]
+      }
+    ],
+    "vim.normalModeKeyBindingsNonRecursive": [
+      {
+        "before": ["<leader>", "d"],
+        "after": ["d", "d"]
+      },
+      {
+        "before": ["<C-n>"],
+        "commands": [":nohl"]
+      },
+      {
+        "before": ["K"],
+        "commands": ["lineBreakInsert"],
+        "silent": true
+      }
+    ],
+    "vim.leader": "<space>",
+    "vim.handleKeys": {
+      "<C-a>": false,
+      "<C-f>": false
+    },
+    "rust-analyzer.checkOnSave.command": "clippy"
+  }
