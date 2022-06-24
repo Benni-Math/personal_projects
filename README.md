@@ -2,6 +2,9 @@
 
 This is a repo for most of my personal projects. 
 
+Currently, I am working on two Rust projects (in the `rust`) folder. Check the
+branches above.
+
 Here is an outline of the folder system (in alphabetical order)
 
 ## c-assembly
