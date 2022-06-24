@@ -2,6 +2,12 @@
 The root folder for my Rust projects. There is a lot of stuff here. Let's start
 with what is finished:
 
+Currently, my goals are to finish some basic linear algebra and group theory
+with `oxidized-algebra` (see branch `rust-matrix`) and to work through the
+'Crust of Rust' series, read the Rustonomicon, and possibly work on the 'PNGme'
+project. That is to say that `rust-server`, `tcp`, `fun_with_trees`, and
+`too_many_linked_lists` are on hold
+
 ## Finished
  - `trpl`: work from 'The Rust Programming Language' book
  - `rustlings`: all of the Rustling exercises (see README in the folder)
