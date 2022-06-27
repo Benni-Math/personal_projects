@@ -20,9 +20,11 @@
 
 package main
 
+import "fmt"
+
 func main() {
 	// How long should the slice be to house all values?
-	beatles := make([]string, ??)
+	beatles := make([]string, 4)
 	
 	beatles[0] = "john"
 	beatles[1] = "george"
@@ -30,5 +32,5 @@ func main() {
 	beatles[3] = "paul"
 
 	// Change this line so it prints the drummer's name.
-	fmt.Println(beatles[??])
+	fmt.Println(beatles[2])
 }

@@ -46,17 +46,17 @@ func main() {
 	// that does not correspond to `a`'s type.
 	// Fix this line so that the following print
 	// prints "123".
-	var a string
+	var a int
 
 	a = 123
 	fmt.Println(a)
 
 	// We are trying to declare and initialize variables `b` and `c`
 	// but there's an syntax error. Adding just 2 characters should suffice to it!
-	var b c int = 2*1 2*2
+	var b, c int = 2*1, 2*2
 	fmt.Println(b, c)
 
 	// Someone tried using the shorthand initialization but got it wrong.
-	d = "pear"
+	d := "pear"
 	fmt.Println(d)
 }
