@@ -21,6 +21,7 @@ func main() {
         fmt.Printf("Status: %s\n", resp.Status)
 
         _, err = io.Copy(os.Stdout, resp.Body)
+        resp.Body.Close() // don't leak resources
         if err != nil {
             fmt.Fprintf(os.Stderr, "fetch: reading %s: %v\n", url, err)
             os.Exit(1)
