@@ -6,3 +6,7 @@ there is the file `fileio.S` which contains macros to perform file I/O which is
 used in the actual `readfile.S` -- these macros, and the general knowledge of
 assembly, were taken from
 [HelloSilicon](https://github.com/below/HelloSilicon).
+
+I've also included the code which Amos wrote for x86 Linux Manjaro, in the file
+`x86-readfile.asm`.
+
