@@ -1,25 +1,57 @@
+use snafu::Snafu;
+
 // PNG file structure chunk types
 // Based on PNG specs - http://www.libpng.org/pub/png/spec/1.2/PNG-Structure.html
+use super::Error;
+use std::str::FromStr;
+use std::fmt::Display;
 
-#[derive(PartialEq, Eq)]
+use snafu::prelude::*;
+
+#[derive(PartialEq, Eq, Debug, Snafu)]
 struct ChunkType {
-
+    bytes: [u8; 4],
 }
 
-impl TryFrom<u8; 4]> for ChunkType {
+impl TryFrom<[u8; 4]> for ChunkType {
+    type Error = Error;
+    
+    fn try_from(value: [u8; 4]) -> Result<Self, Self::Error> {
+        for byte in value {
+            if (byte as char).is_ascii_alphabetic() {
+                // Unsure if this is proper error handling
+                // Might need an Enum or something else
+                return Err("Byte array is not alphabetic.");
+            }
+        }    
 
+        Ok(Self {
+            bytes: value,
+        })
+    }
 }
 
 impl FromStr for ChunkType {
+    type Err = Error;
 
-}
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        s.chars().map(|c| if !c.is_ascii_alphabetic() { return Err("String is not alphabetic.")});
 
-impl Display for ChunkType {
+        let bytes = s.as_bytes()[..4];
 
+        if bytes.len() != 4 { return Err("String not of length 4."); }
+
+
+        Ok(Self {
+            bytes: s.as_bytes(),
+        })
+    }
 }
 
 impl ChunkType {
-    pub fn bytes(&self) -> [u8; 4] {}
+    pub fn bytes(&self) -> [u8; 4] {
+        self.bytes.clone()
+    }
 
     pub fn is_valid(&self) -> bool {}
 
