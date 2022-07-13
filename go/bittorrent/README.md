@@ -39,5 +39,7 @@ Next up, we need to establish a connection to a peer. This is in three parts
  2. Complete a BitTorrent handshake (files in `./vendor/handshake`)
  3. Exchange messages to download the pieces of the file - `./vendor/p2p`
 
+Once we complete the handshake, we wait for an unchoke message to be sent from
+the peer and then we can finally start requesting the pieces of our download.
 
 
