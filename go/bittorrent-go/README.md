@@ -8,6 +8,10 @@ For testing this BitTorrent client, we will be downloading a Debian ISO by
 using the tracker (central server) with HTTP address
 [http://bttracker.debian.org:6969/](http://bttracker.debian.org:6969/).
 
+The file `walkthrough.go` contains the first bits of a walkthrough through the
+code which is covered in the article. The vendor folder contains the fleshed
+out code.
+
 ## Step 1 - processing .torrent files
 
 Torrent files (denoted by `*.torrent`) are encoded in a format called
@@ -42,4 +46,28 @@ Next up, we need to establish a connection to a peer. This is in three parts
 Once we complete the handshake, we wait for an unchoke message to be sent from
 the peer and then we can finally start requesting the pieces of our download.
 
+## Step 3 - Downloading the torrent
+
+This next step is the most difficult one, since we have to deal with
+concurrency and state management, but thankfully Go has our back - Goroutines
+and channels make it surprisingly easy to implement concurrency, and the
+general simplicity of Go makes it easier to understand state (so long as we
+don't complicate things for ourselves).
+
+The first important piece is the `Torrent.Download` method in `p2p.go` - this
+function creates two channels
+ 1. A buffered channel, called the `workQueue` which keeps track of the pieces
+ and distributes them among the threads for download
+ 2. The results channel, which sends the finished downloads back to main
+
+ From here we start spawning goroutines running the
+ `Torrent.startDownloadWorker` method (doing this for each peer). Notice the
+ high level of concurrency -- we are handling multiple different downloads,
+ which we don't want to repeat, among multiple different peers, but the
+ buffered channel, along with the single result channel make this easy. The
+ final piece of this method assembles all of the pieces by drawing from the
+ result channel and copies them all onto a buffer, which we then return.
+
+ To keep track of the download progress, we use a couple different structs by
+ the name of `pieceWork`, `pieceResult`, and `pieceProgress`.
 
