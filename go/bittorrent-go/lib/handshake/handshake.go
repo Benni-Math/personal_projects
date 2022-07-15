@@ -1,5 +1,10 @@
 package handshake
 
+import (
+    "fmt"
+    "io"
+)
+
 // A Handshake is a special message that a peer uses to identify itself
 type Handshake struct {
     Pstr     string
@@ -25,7 +30,7 @@ func (h *Handshake) Serialize() []byte {
     curr += copy(buf[curr:], h.Pstr) // 'BitTorrent protocol' - identifier
     curr += copy(buf[curr:], make([]byte, 8)) // 8 reserved bytes
     curr += copy(buf[curr:], h.InfoHash[:]) // SHA-1 hashed file identifier
-    curr += copy(buf[curr:], h.PeerId[:]) // peer ID which identifies us
+    curr += copy(buf[curr:], h.PeerID[:]) // peer ID which identifies us
 
     return buf
 }
@@ -56,7 +61,7 @@ func Read(r io.Reader) (*Handshake, error) {
     copy(peerID[:], handshakeBuf[pstrlen+8+20:])
 
     h := Handshake {
-        Pstr:       string(handshakeBuf[0:pstrlen])
+        Pstr:       string(handshakeBuf[0:pstrlen]),
         InfoHash:   infoHash,
         PeerID:     peerID,
     }

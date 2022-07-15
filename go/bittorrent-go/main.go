@@ -4,7 +4,7 @@ import(
     "log"
     "os"
 
-    "torrentfile"
+    "github.com/Benni-Math/personal_projects/tree/go-tutorial/go/bittorrent/lib/torrentfile"
 )
 
 func main() {

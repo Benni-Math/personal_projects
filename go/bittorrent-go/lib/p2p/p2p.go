@@ -8,9 +8,9 @@ import (
     "runtime"
     "time"
 
-    "client"
-    "message"
-    "peers"
+    "github.com/Benni-Math/personal_projects/tree/go-tutorial/go/bittorrent/lib/client"
+    "github.com/Benni-Math/personal_projects/tree/go-tutorial/go/bittorrent/lib/message"
+    "github.com/Benni-Math/personal_projects/tree/go-tutorial/go/bittorrent/lib/peers"
 )
 
 // MaxBlockSize is the largest number of bytes a request can ask for
