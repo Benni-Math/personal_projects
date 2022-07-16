@@ -1,4 +1,0 @@
-27c27
-<     for (bits) |bit, ???| {
----
->     for (bits) |bit, i| {
