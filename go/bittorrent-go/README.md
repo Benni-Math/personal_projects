@@ -2,6 +2,9 @@
 
 Based on the [blog post](https://blog.jse.li/posts/torrent/) by Jesse Li.
 
+To build, use `go build -o torrent-client main.go` and to run, get a .torrent
+file and use `./torrent-client <your-torrentfile-name>.torrent <target-name>`.
+
 ---
 
 For testing this BitTorrent client, we will be downloading a Debian ISO by
