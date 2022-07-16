@@ -1,3 +1,3 @@
-type BitField []byte: //not the right syntax
+type BitField = Vec<u8>; //not the right syntax?
 
 impl BitField {}
