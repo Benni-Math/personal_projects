@@ -24,8 +24,8 @@ impl ChunkTypeError {
     }
 }
 
-#[derive(PartialEq, Eq, Debug)]
-struct ChunkType {
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ChunkType {
     bytes: [u8; 4],
 }
 
