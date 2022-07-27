@@ -1,27 +1,75 @@
-use snafu::Snafu;
-
 // PNG file structure chunk types
 // Based on PNG specs - http://www.libpng.org/pub/png/spec/1.2/PNG-Structure.html
-use super::Error;
-use std::str::FromStr;
-use std::fmt::Display;
+use std::convert::TryFrom;
+use std::fmt;
+use std::str::{FromStr, from_utf8};
 
-use snafu::prelude::*;
+use crate::{Error, Result};
 
-#[derive(PartialEq, Eq, Debug, Snafu)]
+// Creating a quick error type
+#[derive(Debug)]
+struct ChunkTypeError(String);
+
+impl std::error::Error for ChunkTypeError {}
+
+impl fmt::Display for ChunkTypeError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "ChunkTypeError: {}", self.0)
+    }
+}
+
+impl ChunkTypeError {
+    fn new(s: &str) -> Box<ChunkTypeError> {
+        Box::new(ChunkTypeError(s.to_string()))
+    }
+}
+
+#[derive(PartialEq, Eq, Debug)]
 struct ChunkType {
     bytes: [u8; 4],
+}
+
+impl ChunkType {
+    pub fn bytes(&self) -> [u8; 4] {
+        self.bytes.clone()
+    }
+
+    pub fn is_valid(&self) -> bool {
+        self.bytes.into_iter()
+            .fold(true, |acc, c| acc && ChunkType::is_valid_byte(c))
+            && self.bytes[2].is_ascii_uppercase()
+    }
+
+    pub fn is_valid_byte(byte: u8) -> bool {
+        byte.is_ascii_alphabetic()
+    }
+
+    pub fn is_critical(&self) -> bool {
+        self.bytes[0].is_ascii_uppercase()
+    }
+
+    pub fn is_public(&self) -> bool {
+        self.bytes[1].is_ascii_uppercase()
+    }
+
+    pub fn is_reserved_bit_valid(&self) -> bool {
+        self.bytes[2].is_ascii_uppercase()
+    }
+
+    pub fn is_safe_to_copy(&self) -> bool {
+        self.bytes[3].is_ascii_lowercase()
+    }
 }
 
 impl TryFrom<[u8; 4]> for ChunkType {
     type Error = Error;
     
-    fn try_from(value: [u8; 4]) -> Result<Self, Self::Error> {
+    fn try_from(value: [u8; 4]) -> Result<Self> {
         for byte in value {
-            if (byte as char).is_ascii_alphabetic() {
+            if !(byte as char).is_ascii_alphabetic() {
                 // Unsure if this is proper error handling
                 // Might need an Enum or something else
-                return Err("Byte array is not alphabetic.");
+                return Err(ChunkTypeError::new("Failed TryFrom<[u8; 4]>. Byte array is not alphabetic."));
             }
         }    
 
@@ -31,37 +79,34 @@ impl TryFrom<[u8; 4]> for ChunkType {
     }
 }
 
-impl FromStr for ChunkType {
-    type Err = Error;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        s.chars().map(|c| if !c.is_ascii_alphabetic() { return Err("String is not alphabetic.")});
-
-        let bytes = s.as_bytes()[..4];
-
-        if bytes.len() != 4 { return Err("String not of length 4."); }
-
-
-        Ok(Self {
-            bytes: s.as_bytes(),
-        })
+impl fmt::Display for ChunkType {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        // Not the best practice to just unwrap here...
+        let s = from_utf8(&self.bytes).unwrap();
+        write!(f, "{}", s)
     }
 }
 
-impl ChunkType {
-    pub fn bytes(&self) -> [u8; 4] {
-        self.bytes.clone()
+impl FromStr for ChunkType {
+    type Err = Error;
+
+    fn from_str(s: &str) -> Result<Self> {    
+        // First, we check that everything is alphabetic    
+        if let Some(_) = s.chars().find(|c| !c.is_ascii_alphabetic()) {
+            return Err(ChunkTypeError::new("Failed FromStr. String is not ASCII alphabetic."));
+        }
+
+        // Next, we check the length of the string
+        if s.len() != 4 { return Err(ChunkTypeError::new("Failed FromStr. String not of length 4.")); }
+
+        // Finally, we use
+        //      - as_bytes() to convert to &[u8]
+        //      - implicitly deref and use try_into() to convert from slice to [u8; 4]
+        //      - have a ? for error catching and unwrapping
+        Ok(Self {
+            bytes: s.as_bytes().try_into()?,
+        })
     }
-
-    pub fn is_valid(&self) -> bool {}
-
-    pub fn is_critical(&self) -> bool {}
-
-    pub fn is_public(&self) -> bool {}
-
-    pub fn is_reserved_bit_valid(&self) -> bool {}
-
-    pub fn is_safe_to_copy(&self) -> bool {}
 }
 
 #[cfg(test)]
