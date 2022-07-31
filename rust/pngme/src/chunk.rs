@@ -2,6 +2,8 @@ use std::convert::TryFrom;
 use std::fmt;
 use std::io::{BufReader, Read};
 
+use crc::Crc;
+
 use crate::{Error, Result};
 use crate::chunk_type::ChunkType;
 
@@ -15,34 +17,48 @@ pub struct Chunk {
 
 impl Chunk {
     pub fn new(chunk_type: ChunkType, data: Vec<u8>) -> Self {
-        todo!()
+        Chunk {
+            // Is it okay to just directly cast?
+            length: data.len() as u32,
+            chunk_type,
+            data,
+            // TODO: CRC
+            crc: 0,
+        }
     }
 
     pub fn length(&self) -> u32 {
-        todo!()
+        self.length
     }
 
     pub fn chunk_type(&self) -> &ChunkType {
-        todo!()
+        &self.chunk_type
     }
 
     pub fn data(&self) -> &[u8] {
-        todo!()
+        self.data.as_slice()
     }
 
     pub fn crc(&self) -> u32 {
-        todo!()
+        self.crc
     }
     
     pub fn data_as_string(&self) ->  Result<String> {
-        match String::from_utf8(self.data) {
+        let data_copy: Vec<u8> = self.data.iter().cloned().collect();
+        match String::from_utf8(data_copy) {
             Ok(s) => Ok(s),
             Err(e) => Err(Box::new(e)),
         }
     }
 
-    pub fn as_bytes(&self) -> Vec<u8> {
-        todo!()
+    pub fn as_bytes<'a>(&self) -> Vec<u8> {
+        // TODO: this still isn't pretty
+        let mut result = Vec::from_iter(self.length.to_be_bytes().iter().cloned()); 
+        result.append(&mut Vec::from_iter(self.chunk_type.bytes().iter().cloned()));
+        result.append(&mut Vec::from_iter(self.data.iter().cloned()));
+        result.append(&mut Vec::from_iter(self.crc.to_be_bytes().iter().cloned()));
+
+        result
     }
 }
 
@@ -54,8 +70,29 @@ impl TryFrom<&[u8]> for Chunk {
         let mut buffer = [0u8; 4];
 
         reader.read_exact(&mut buffer)?;
-        let data_length = u32::from_be_bytes(buffer);
-        todo!()
+        let length = u32::from_be_bytes(buffer);
+
+        reader.read_exact(&mut buffer)?;
+        let chunk_type = buffer.clone();
+        let chunk_type = ChunkType::try_from(chunk_type)?;
+
+        // TODO: a little messy
+        let mut data = Vec::new();
+        let mut data_buffer = [0u8];
+        for i in 0..length {
+            reader.read_exact(&mut data_buffer)?;
+            data.push(data_buffer[0]);
+        }
+
+        reader.read_exact(&mut buffer)?;
+        let crc = u32::from_be_bytes(buffer);
+
+        Ok(Chunk {
+            length,
+            chunk_type,
+            data,
+            crc
+        })
     }
 }
 
