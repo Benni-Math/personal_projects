@@ -8,19 +8,33 @@ use crate::{Error, Result};
 
 // Creating a quick error type
 #[derive(Debug)]
-struct ChunkTypeError(String);
+enum _ChunkTypeError {
+    FromStr,
+    FromBytes,
+}
+#[derive(Debug)]
+struct ChunkTypeError {
+    kind: _ChunkTypeError,
+    msg: String,
+}
 
 impl std::error::Error for ChunkTypeError {}
 
 impl fmt::Display for ChunkTypeError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "ChunkTypeError: {}", self.0)
+        write!(f, "ChunkTypeError: ",);
+
+        match self.kind {
+            _ChunkTypeError::FromBytes => { write!(f, "Failed TryFrom<[u8; 4]>. ",); }
+            _ChunkTypeError::FromStr => { write!(f, "Failed FromStr. ", ); }
+        }
+        write!(f, "ChunkTypeError: {}", self.msg)
     }
 }
 
 impl ChunkTypeError {
-    fn new(s: &str) -> Box<ChunkTypeError> {
-        Box::new(ChunkTypeError(s.to_string()))
+    fn new(kind: _ChunkTypeError, s: &str) -> Box<ChunkTypeError> {
+        Box::new(ChunkTypeError{ kind, msg: s.to_string() })
     }
 }
 
@@ -31,12 +45,12 @@ pub struct ChunkType {
 
 impl ChunkType {
     pub fn bytes(&self) -> [u8; 4] {
-        self.bytes.clone()
+        self.bytes
     }
 
     pub fn is_valid(&self) -> bool {
         self.bytes.into_iter()
-            .fold(true, |acc, c| acc && ChunkType::is_valid_byte(c))
+            .all(ChunkType::is_valid_byte)
             && self.bytes[2].is_ascii_uppercase()
     }
 
@@ -69,7 +83,7 @@ impl TryFrom<[u8; 4]> for ChunkType {
             if !(byte as char).is_ascii_alphabetic() {
                 // Unsure if this is proper error handling
                 // Might need an Enum or something else
-                return Err(ChunkTypeError::new("Failed TryFrom<[u8; 4]>. Byte array is not alphabetic."));
+                return Err(ChunkTypeError::new(_ChunkTypeError::FromBytes, "Byte array is not alphabetic."));
             }
         }    
 
@@ -92,12 +106,12 @@ impl FromStr for ChunkType {
 
     fn from_str(s: &str) -> Result<Self> {    
         // First, we check that everything is alphabetic    
-        if let Some(_) = s.chars().find(|c| !c.is_ascii_alphabetic()) {
-            return Err(ChunkTypeError::new("Failed FromStr. String is not ASCII alphabetic."));
+        if s.chars().any(|c| !c.is_ascii_alphabetic()) {
+            return Err(ChunkTypeError::new(_ChunkTypeError::FromStr, "String is not ASCII alphabetic."));
         }
 
         // Next, we check the length of the string
-        if s.len() != 4 { return Err(ChunkTypeError::new("Failed FromStr. String not of length 4.")); }
+        if s.len() != 4 { return Err(ChunkTypeError::new(_ChunkTypeError::FromStr, "String not of length 4.")); }
 
         // Finally, we use
         //      - as_bytes() to convert to &[u8]
