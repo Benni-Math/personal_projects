@@ -1,11 +1,12 @@
 /**
- * StudentNodes represent students
+ * StudentNodes represent students.
  * @author Benedikt Arnarsson
  */
 class StudentNode {
   id: string; // unique, identifiable student ID
+  // higher relational weight implies 'better' relation
   relations: Map<string, number>; // StudentNode.id => weight of edge
-  graph: StudentGraph;
+  // graph: StudentGraph;
 
   constructor(id: string) {
     this.id = id;
