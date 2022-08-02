@@ -42,15 +42,19 @@ impl Chunk {
         self.crc
     }
 
+    // Do I want to implement my own CRC algo?
+    // Probably not...
     fn calc_crc(chunk_type: &ChunkType, data: &Vec<u8>) -> u32 {
         use crc::{Crc, CRC_32_ISO_HDLC};
 
         let calculator = Crc::<u32>::new(&CRC_32_ISO_HDLC);
 
-        let mut bytes: Vec<u8> = Vec::new();
-        // TODO: this isn't very pretty
-        bytes.append(&mut Vec::from_iter(chunk_type.bytes().iter().cloned()));
-        bytes.append(&mut Vec::from_iter(data.iter().cloned()));
+        let bytes: Vec<u8> = chunk_type
+                .bytes()
+                .iter()
+                .chain(data.iter())
+                .copied()
+                .collect();
 
         calculator.checksum(bytes.as_ref())
     }
@@ -64,13 +68,14 @@ impl Chunk {
     }
 
     pub fn as_bytes<'a>(&self) -> Vec<u8> {
-        // TODO: this isn't pretty
-        let mut result = Vec::from_iter(self.length.to_be_bytes().iter().cloned()); 
-        result.append(&mut Vec::from_iter(self.chunk_type.bytes().iter().cloned()));
-        result.append(&mut Vec::from_iter(self.data.iter().cloned()));
-        result.append(&mut Vec::from_iter(self.crc.to_be_bytes().iter().cloned()));
-
-        result
+        self.length
+            .to_be_bytes()
+            .iter()
+            .chain(self.chunk_type.bytes().iter())
+            .chain(self.data.iter())
+            .chain(self.crc.to_be_bytes().iter())
+            .copied()
+            .collect()
     }
 }
 
@@ -112,13 +117,8 @@ impl TryFrom<&[u8]> for Chunk {
         let chunk_type = buffer.clone();
         let chunk_type = ChunkType::try_from(chunk_type)?;
 
-        // TODO: a little messy
-        let mut data = Vec::new();
-        let mut data_buffer = [0u8];
-        for _ in 0..length {
-            reader.read_exact(&mut data_buffer)?;
-            data.push(data_buffer[0]);
-        }
+        let mut data = vec![0u8; length as usize];
+        reader.read_exact(&mut data)?;
 
         reader.read_exact(&mut buffer)?;
         let crc = u32::from_be_bytes(buffer);
