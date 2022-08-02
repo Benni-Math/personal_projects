@@ -2,8 +2,6 @@ use std::convert::TryFrom;
 use std::fmt;
 use std::io::{BufReader, Read};
 
-use crc::Crc;
-
 use crate::{Error, Result};
 use crate::chunk_type::ChunkType;
 
@@ -17,13 +15,13 @@ pub struct Chunk {
 
 impl Chunk {
     pub fn new(chunk_type: ChunkType, data: Vec<u8>) -> Self {
+        let crc = Chunk::calc_crc(&chunk_type, &data);
         Chunk {
             // Is it okay to just directly cast?
             length: data.len() as u32,
             chunk_type,
             data,
-            // TODO: CRC
-            crc: 0,
+            crc,
         }
     }
 
@@ -40,7 +38,21 @@ impl Chunk {
     }
 
     pub fn crc(&self) -> u32 {
+
         self.crc
+    }
+
+    fn calc_crc(chunk_type: &ChunkType, data: &Vec<u8>) -> u32 {
+        use crc::{Crc, CRC_32_ISO_HDLC};
+
+        let calculator = Crc::<u32>::new(&CRC_32_ISO_HDLC);
+
+        let mut bytes: Vec<u8> = Vec::new();
+        // TODO: this isn't very pretty
+        bytes.append(&mut Vec::from_iter(chunk_type.bytes().iter().cloned()));
+        bytes.append(&mut Vec::from_iter(data.iter().cloned()));
+
+        calculator.checksum(bytes.as_ref())
     }
     
     pub fn data_as_string(&self) ->  Result<String> {
@@ -52,13 +64,37 @@ impl Chunk {
     }
 
     pub fn as_bytes<'a>(&self) -> Vec<u8> {
-        // TODO: this still isn't pretty
+        // TODO: this isn't pretty
         let mut result = Vec::from_iter(self.length.to_be_bytes().iter().cloned()); 
         result.append(&mut Vec::from_iter(self.chunk_type.bytes().iter().cloned()));
         result.append(&mut Vec::from_iter(self.data.iter().cloned()));
         result.append(&mut Vec::from_iter(self.crc.to_be_bytes().iter().cloned()));
 
         result
+    }
+}
+
+// Quick ChunkError type for dealing with TryFrom
+#[derive(Debug)]
+enum ChunkParseError {
+    IncorrectLength(u32),
+    IncorrectCrc(u32),
+}
+
+impl std::error::Error for ChunkParseError {}
+
+impl fmt::Display for ChunkParseError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::IncorrectLength(l) => write!(f, "Incorrect length: {}", l),
+            Self::IncorrectCrc(crc) => write!(f, "Incorrect CRC: {}", crc),
+        }
+    }
+}
+
+impl ChunkParseError {
+    fn to_err(self) -> Error {
+        Box::new(self)
     }
 }
 
@@ -79,13 +115,21 @@ impl TryFrom<&[u8]> for Chunk {
         // TODO: a little messy
         let mut data = Vec::new();
         let mut data_buffer = [0u8];
-        for i in 0..length {
+        for _ in 0..length {
             reader.read_exact(&mut data_buffer)?;
             data.push(data_buffer[0]);
         }
 
         reader.read_exact(&mut buffer)?;
         let crc = u32::from_be_bytes(buffer);
+
+        if length != data.len().try_into().unwrap() { 
+            return Err(ChunkParseError::IncorrectLength(length).to_err());
+        };
+
+        if crc != Chunk::calc_crc(&chunk_type, &data) {
+            return Err(ChunkParseError::IncorrectCrc(crc).to_err());
+        }
 
         Ok(Chunk {
             length,

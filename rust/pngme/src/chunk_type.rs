@@ -13,7 +13,7 @@ enum _ChunkTypeError {
     FromBytes,
 }
 #[derive(Debug)]
-struct ChunkTypeError {
+pub struct ChunkTypeError {
     kind: _ChunkTypeError,
     msg: String,
 }
