@@ -82,7 +82,6 @@ impl TryFrom<[u8; 4]> for ChunkType {
         for byte in value {
             if !(byte as char).is_ascii_alphabetic() {
                 // Unsure if this is proper error handling
-                // Might need an Enum or something else
                 return Err(ChunkTypeError::new(_ChunkTypeError::FromBytes, "Byte array is not alphabetic."));
             }
         }    
