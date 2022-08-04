@@ -1,0 +1,4 @@
+name = "demos"
+uuid = "48d89ab6-54a5-4daf-841f-14a7a877e92c"
+authors = ["Benni-Math <benediktjens.arnarsson@gmail.com>"]
+version = "0.1.0"
