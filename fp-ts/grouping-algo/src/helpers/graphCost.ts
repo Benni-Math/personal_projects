@@ -1,24 +1,41 @@
 // General purpose graph cost function for assessing quality of grouping
 
-import GroupGraph from '../types/GroupGraph';
+import GroupGraph, { StudentGraph } from '../types/GroupGraph';
 
 /**
- * Given a weighted (undirected) graph, calculates a 'total weight' or cost.
- * Current calculation is (sum_ext_weights) - (sum_int_weights).
+ * Calculates the two times the sum of the weights between the groups of a GroupGraph.
  * @author Benedikt Arnarsson
+ * @param g The GroupGraph for which we are calculating the 'exterior' weight
+ * @returns Two times the sum of the weights between the groups (via the GroupGraph.matrix)
  */
 const groupGraphCost = (g: GroupGraph): number => {
-  let int_sum = 0;
-  let ext_sum = 0
+  let cost = 0;
 
   // Calculating the sums
-  for (const group of g.groups) {
-    for (const student of group) {
-      for
-    }
-  }
+  g.matrix.forEach((row) => {
+    row.forEach((weight) => {
+      cost += weight;
+    })
+  })
   
-  return (ext_sum - int_sum)/2.0;
+  // WARNING: this cost is NOT the sum of the weights, but two times the sum of the weights
+  return cost;
 };
 
-export default groupGraphCost;
+const studentGraphCost = (g: StudentGraph): number => {
+  let cost = 0;
+
+  for (const student of g.students.values()) {
+    for (const weight of student.relations.values()) {
+      cost += weight;
+    }
+  }
+
+  return cost/2.0;
+}
+
+const graphCost = (g: GroupGraph): number => {
+  return groupGraphCost(g) - studentGraphCost(g.studentGraph);
+}
+
+export default graphCost;

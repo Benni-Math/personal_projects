@@ -110,7 +110,7 @@ export class StudentGraph {
  * @author Benedikt Arnarsson
  */
 class GroupGraph {
-  // matrix: number[][]; // Unsure if this is needed
+  matrix: number[][]; // Useful for summing the 'exterior weight'
   groups: StudentNode[][]; // A StudentNode[] is a group, so this is a list of the groups
   studentGraph: StudentGraph; // The corresponding StudentGraph
 
