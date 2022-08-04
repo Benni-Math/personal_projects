@@ -1,7 +1,6 @@
 // This is envisioned as a general purpose ABM library.
 mod model_frame;
 mod experiment;
-mod data_dict;
 mod optimizer;
 mod helpers;
 mod traits;
