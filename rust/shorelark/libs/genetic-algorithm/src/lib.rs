@@ -41,13 +41,13 @@ where
         &self,
         rng: &mut dyn RngCore,
         population: &[I],
-    ) -> Vec<I> 
+    ) -> (Vec<I>, Statistics) 
     where
         I: Individual 
     {
         assert!(!population.is_empty());
 
-        (0..population.len())
+        let new_population = (0..population.len())
             .map(|_| {
                 // selection
                 let parent_a = self
@@ -71,7 +71,9 @@ where
                 // convert `Chromosome` back into `Individual`
                 I::create(child)
             })
-            .collect()
+            .collect();
+        
+        (new_population, Statistics::new(population))
     }
 }
 

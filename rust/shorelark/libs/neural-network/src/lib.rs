@@ -8,10 +8,6 @@ pub struct LayerTopology {
     pub neurons: usize,
 }
 
-struct Layer {
-    neurons: Vec<Neuron>,
-}
-
 struct Neuron {
     bias: f32,
     weights: Vec<f32>,
