@@ -1,4 +1,6 @@
 use std::io;
+use std::env;
+use std::error::Error;
 use std::collections::HashMap;
 
 use hyper::{Chunk, StatusCode};
@@ -9,8 +11,17 @@ use hyper::server::{Request, Response, Service};
 use futures::Stream;
 use futures::future::{Future, FutureResult};
 
+use diesel::prelude::*;
+use diesel::pg::PgConnection;
+
 use serde_json::json;
 use log::{debug, info};
+use maud::html;
+
+mod models;
+mod schema;
+
+use models::{Message, NewMessage};
 
 fn main() {
     env_logger::init();
@@ -42,6 +53,20 @@ impl Service for Microservice {
                     .then(make_post_response);
                 Box::new(future)
             },
+            (&Get, "/") => {
+                let time_range = match request.query() {
+                    Some(query) => parse_query(query),
+                    None => Ok(TimeRange {
+                        before: None,
+                        after: None,
+                    }),
+                };
+                let response = match time_range {
+                    Ok(time_range) => make_get_response(query_db(time_range)),
+                    Err(error) => make_error_response(&error),
+                };
+                Box::new(response)
+            },
             _ => Box::new(futures::future::ok(
                 Response::new().with_status(StatusCode::NotFound),
             )),
@@ -52,6 +77,11 @@ impl Service for Microservice {
 struct NewMessage {
     username: String,
     message: String,
+}
+
+struct TimeRange {
+    before: Option<i64>,
+    after: Option<i64>,
 }
 
 fn parse_form(form_chunk: Chunk) -> FutureResult<NewMessage, hyper::Error> {
@@ -75,7 +105,36 @@ fn parse_form(form_chunk: Chunk) -> FutureResult<NewMessage, hyper::Error> {
     }
 }
 
+fn parse_query(query: &str) -> Result<TimeRange, String> {
+    let args = url::form_urlencoded::parse(&query.as_bytes())
+        .into_owned()
+        .collect::<HashMap<String, String>>();
+    
+    let before = args.get("before").map(|value| value.parse::<i64>());
+    if let Some(ref result) = before {
+        if let Err(ref error) = *result {
+            return Err(format!("Error parsing 'before': {}", error));
+        }
+    }
+
+    let after = args.get("after").map(|value| value.parse::<i64>());
+    if let Some(ref result) = before {
+        if let Err(ref error) = *result {
+            return Err(format!("Error parsing 'after': {}", error));
+        }
+    }
+
+    Ok(TimeRange {
+        before: before.map(|b| b.unwrap()),
+        after: after.map(|a| a.unwrap()),
+    })
+}
+
 fn write_to_db(entry: NewMessage) -> FutureResult<i64, hyper::Error> {
+    todo!()
+}
+
+fn query_db(time_range: TimeRange) -> FutureResult<Option<Vec<Message>>, hyper::Error> {
     todo!()
 }
 
