@@ -2,7 +2,7 @@ use crate::*;
 
 #[derive(Clone, Debug, Serialize)]
 pub struct World {
-    pub animals: Vec<Animals>,
+    pub animals: Vec<Animal>,
     pub foods: Vec<Food>,
 }
 

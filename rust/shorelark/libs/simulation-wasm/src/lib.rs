@@ -10,7 +10,7 @@ use serde::Serialize;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
-pubs struct Simulation {
+pub struct Simulation {
     rng: ThreadRng,
     sim: sim::Simulation,
 }

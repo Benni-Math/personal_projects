@@ -13,7 +13,7 @@ impl fmt::Display for Statistics {
 
         write!(
             f,
-            "min[{:.2}] max[{:.2}] median[{:.2}]",
+            "min[{:.2}] max[{:.2}] mean[{:.2}] median[{:.2}]",
             self.ga.min_fitness(),
             self.ga.max_fitness(),
             self.ga.avg_fitness(),

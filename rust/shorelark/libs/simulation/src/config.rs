@@ -19,7 +19,7 @@ pub struct Config {
     pub sim_speed_max: f32,
     pub sim_speed_accel: f32,
     pub sim_rotation_accel: f32,
-    pub sim_generation_length: f32,
+    pub sim_generation_length: usize,
 
     pub world_animals: usize,
     pub world_foods: usize,

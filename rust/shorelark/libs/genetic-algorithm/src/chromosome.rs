@@ -77,7 +77,7 @@ mod tests {
         #[test]
         fn test() {
             let chromosome = chromosome();
-            let genes: Vec<_> = chromosomes.iter().collect();
+            let genes: Vec<_> = chromosome.iter().collect();
 
             assert_eq!(genes.len(), 3);
             assert_eq!(genes[0], &3.0);
@@ -137,7 +137,7 @@ mod tests {
 
         #[test]
         fn test() {
-            let genes: Vec<_> = chromosome.into_iter().collect();
+            let genes: Vec<_> = chromosome().into_iter().collect();
 
             assert_eq!(genes.len(), 3);
             assert_eq!(genes[0], 3.0);

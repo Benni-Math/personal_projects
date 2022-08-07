@@ -1,5 +1,3 @@
-#![feature(crate_visibility_modifier)]
-
 pub use self::{animal::*, brain::*, config::*, eye::*, food::*,  statistics::*, world::*};
 
 mod animal;
@@ -47,7 +45,7 @@ impl Simulation {
     }
 
     pub fn step(&mut self, rng: &mut dyn RngCore) -> Option<Statistics> {
-        self.process_collisions();
+        self.process_collisions(rng);
         self.process_brains();
         self.process_movements();
         self.try_evolving(rng)
@@ -55,7 +53,7 @@ impl Simulation {
 
     pub fn train(&mut self, rng: &mut dyn RngCore) -> Statistics {
         loop {
-            if let Some(Statistics) = self.step(rng) {
+            if let Some(statistics) = self.step(rng) {
                 return statistics;
             }
         }
@@ -63,7 +61,7 @@ impl Simulation {
 }
 
 impl Simulation {
-    fn process_collisions(&mut self) {
+    fn process_collisions(&mut self, rng: &mut dyn RngCore) {
         for animal in &mut self.world.animals {
             for food in &mut self.world.foods {
                 let distance =  na::distance(

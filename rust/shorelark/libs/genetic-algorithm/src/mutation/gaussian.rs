@@ -32,7 +32,7 @@ mod tests {
     use rand::SeedableRng;
     use rand_chacha::ChaCha8Rng;
 
-    fn actual(chance, f32, coeff: f32) -> Vec<f32> {
+    fn actual(chance: f32, coeff: f32) -> Vec<f32> {
         let mut child = vec![1.0, 2.0, 3.0, 4.0, 5.0].into_iter().collect();
         let mut rng = ChaCha8Rng::from_seed(Default::default());
 
@@ -77,7 +77,7 @@ mod tests {
         }
 
         mod and_zero_coefficient {
-            use::super::*;
+            use super::*;
 
             #[test]
             fn does_not_change_the_original_chromosome() {

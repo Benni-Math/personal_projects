@@ -11,7 +11,7 @@ pub struct Animal {
 impl From<&sim::Animal> for Animal {
     fn from(animal: &sim::Animal) -> Self {
         Self {
-            x: animal.position().x
+            x: animal.position().x,
             y: animal.position().y,
             rotation: animal.rotation().angle(),
             vision: animal.vision().to_owned(),
