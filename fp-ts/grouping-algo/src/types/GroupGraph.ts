@@ -118,21 +118,51 @@ class GroupGraph {
   groupSize?: number;
   groupNumber?: number;
 
-  addStudent(student: StudentNode) {
+  // TODO: This function adds a new student in and assigns a group
+  addStudent(student: StudentNode): number {
     if (this.groupSize) {
-      this.addStudentFixedGroupSize(student);
+      return this.addStudentFixedGroupSize(student);
     } else {
-      this.addStudentFixedGroupNumber(student);
+      return this.addStudentFixedGroupNumber(student);
     }
   }
 
-  addStudentFixedGroupSize(student: StudentNode) {
-    // TODO:
+  addStudentFixedGroupSize(student: StudentNode): number {
+    // TODO:num
+    let group_num = 0;
+
+    return group_num;
   }
 
-  addStudentFixedGroupNumber(student: StudentNode) {
+  addStudentFixedGroupNumber(student: StudentNode): number {
     // TODO:
+    let group_num = 0;
+
+    return group_num;
   }
+
+  // implements inefficient search for StudentNode...
+  // TODO: adding relations
+  newRelation(id1: string, id2: string, rel: number): boolean {
+    // First check that both of these students exist
+    if (!this.studentGraph.students.has(id1) || !this.studentGraph.students.has(id2)) {
+      return false;
+    }
+
+    let student1 = this.studentGraph.students.get(id1);
+    let student2 = this.studentGraph.students.get(id2);
+
+    return true;
+  }
+  
+  // TODO: adding students
+  newStudent(id: string, relations?: Map<string, number>, groups?: Array<number>): boolean {
+    return true;
+  }
+
+  // TODO: constructor StudentGraph -> GroupGraph
+  // TODO: create groups / reshuffle / etc (for testing)
+  // TODO: from table/DB-entry to GroupGraph
 }
 
 
