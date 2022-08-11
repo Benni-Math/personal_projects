@@ -203,7 +203,7 @@ class Game extends React.Component {
           ))}
         </div>
 
-        <div className="controls">
+        {/* <div className="controls">
                     Update every <input value={interval} onChange={this.handleIntervalChange} /> msec
                     {isRunning ?
                         <button className="button" onClick={this.stopGame}>Stop</button> :
@@ -211,7 +211,7 @@ class Game extends React.Component {
                     }
                     <button className="button" onClick={this.handleRandom}>Random</button>
                     <button className="button" onClick={this.handleClear}>Clear</button>
-                </div>
+        </div> */}
       </div>
     )
   }
