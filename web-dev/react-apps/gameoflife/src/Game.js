@@ -110,7 +110,7 @@ class Game extends React.Component {
   }
 
   runIteration() {
-    let newBoard = this.makeEmptyBoard;
+    let newBoard = this.makeEmptyBoard();
 
     for (let y = 0; y < this.rows; y++) {
       for (let x = 0; x < this.cols; x++) {
@@ -151,12 +151,14 @@ class Game extends React.Component {
       [0, -1],
     ];
 
-    for (const dir of dirs) {
+    for (let i = 0; i < dirs.length; i++) {
+      const dir = dirs[i];
+
       const x1 = x + dir[1];
-      const x1IsValid = (x1 >= 0 && x1 <= this.cols);
+      const x1IsValid = (x1 >= 0 && x1 < this.cols);
 
       const y1 = y + dir[0];
-      const y1IsValid = (y1 >= 0 && y1 <= this.rows);
+      const y1IsValid = (y1 >= 0 && y1 < this.rows);
 
       if (x1IsValid && y1IsValid && board[y1][x1]) {
         neighbors++;
@@ -186,7 +188,7 @@ class Game extends React.Component {
   }
 
   render() {
-    const { cells } = this.state;
+    const { cells, interval, isRunning } = this.state;
 
     return (
       <div>
@@ -202,8 +204,8 @@ class Game extends React.Component {
         </div>
 
         <div className="controls">
-                    Update every <input value={this.state.interval} onChange={this.handleIntervalChange} /> msec
-                    {this.state.isRunning ?
+                    Update every <input value={interval} onChange={this.handleIntervalChange} /> msec
+                    {isRunning ?
                         <button className="button" onClick={this.stopGame}>Stop</button> :
                         <button className="button" onClick={this.runGame}>Run</button>
                     }
