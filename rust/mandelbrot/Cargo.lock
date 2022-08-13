@@ -39,12 +39,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3d7b894f5411737b7867f4827955924d7c254fc9f4d91a6aad6b097804b1018b"
 
 [[package]]
-name = "crossbeam"
-version = "0.2.12"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bd66663db5a988098a89599d4857919b3acf7f61402e61365acfd3919857b9be"
-
-[[package]]
 name = "crossbeam-channel"
 version = "0.5.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -98,6 +92,12 @@ dependencies = [
  "adler32",
  "byteorder",
 ]
+
+[[package]]
+name = "deque"
+version = "0.3.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a694dae478589798d752c7125542f8a5ae8b6e59476172baf2eed67357bdfa27"
 
 [[package]]
 name = "either"
@@ -168,7 +168,7 @@ version = "0.1.22"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "229d53d58899083193af11e15917b5640cd40b29ff475a1fe4ef725deb02d0f2"
 dependencies = [
- "rayon",
+ "rayon 1.5.3",
 ]
 
 [[package]]
@@ -187,9 +187,9 @@ checksum = "7d947cbb889ed21c2a84be6ffbaebf5b4e0f4340638cba0444907e38b56be084"
 name = "mandelbrot"
 version = "0.1.0"
 dependencies = [
- "crossbeam",
  "image",
  "num",
+ "rayon 0.4.3",
 ]
 
 [[package]]
@@ -223,7 +223,7 @@ checksum = "e63899ad0da84ce718c14936262a41cee2c79c981fc0a0e7c7beb47d5a07e8c1"
 dependencies = [
  "num-integer",
  "num-traits 0.2.15",
- "rand",
+ "rand 0.4.6",
  "rustc-serialize",
 ]
 
@@ -318,6 +318,16 @@ dependencies = [
 
 [[package]]
 name = "rand"
+version = "0.3.23"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "64ac302d8f83c0c1974bf758f6b041c6c8ada916fbb44a609158ca8b064cc76c"
+dependencies = [
+ "libc",
+ "rand 0.4.6",
+]
+
+[[package]]
+name = "rand"
 version = "0.4.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "552840b97013b1a26992c11eac34bdd778e464601a4c2054b5f0bff7c6761293"
@@ -343,6 +353,18 @@ name = "rand_core"
 version = "0.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9c33a3c44ca05fa6f1807d8e6743f3824e8509beca625669633be0acbdf509dc"
+
+[[package]]
+name = "rayon"
+version = "0.4.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0f0783f5880c56f5a308e219ac9309dbe781e064741dd5def4c617c440890305"
+dependencies = [
+ "deque",
+ "libc",
+ "num_cpus",
+ "rand 0.3.23",
+]
 
 [[package]]
 name = "rayon"
