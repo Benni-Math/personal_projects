@@ -22,7 +22,7 @@ class Cell extends React.Component {
   }
 }
 
-class Game extends React.Component { 
+class Game extends React.Component {
   state = {
     cells: [],
     isRunning: false,
@@ -86,7 +86,7 @@ class Game extends React.Component {
     const y = Math.floor(offsetY / CELL_SIZE);
 
     const xIsValid = (x >= 0 && x <= this.cols);
-    const yIsValid = (y >= 0 && y<= this.rows);
+    const yIsValid = (y >= 0 && y <= this.rows);
 
     if (xIsValid && yIsValid) {
       this.board[y][x] = !this.board[y][x];
@@ -140,7 +140,7 @@ class Game extends React.Component {
   calculateNeighbors(board, x, y) {
     let neighbors = 0;
 
-    const dirs =[
+    const dirs = [
       [-1, -1],
       [-1, 0],
       [-1, 1],
@@ -192,9 +192,9 @@ class Game extends React.Component {
 
     return (
       <div>
-        <div 
+        <div
           className="Board"
-          style={{width: WIDTH, height: HEIGHT, backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px`}}
+          style={{ width: WIDTH, height: HEIGHT, backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px` }}
           onClick={this.handleClick}
           ref={(n) => { this.boardRef = n; }}
         >

@@ -55,19 +55,15 @@ type AddCustomTypeName = {
 /*                                Constants                               */
 /*------------------------------------------------------------------------*/
 
-// Add description of constant
-const ADD_CONSTANT_NAME = 'add constant value';
+// Could make these more 'reactive' or 'versatile' 
+// Unsure if I should just keep these in the Grid component instead
+const CELL_SIZE = 20;
+const WIDTH = 800;
+const HEIGHT = 600;
 
 /*------------------------------------------------------------------------*/
 /*                                  State                                 */
 /*------------------------------------------------------------------------*/
-
-/* -------------- Views ------------- */
-
-enum View {
-  // Add description of view
-  AddViewName = 'add-view-name',
-}
 
 /* -------- State Definition -------- */
 
