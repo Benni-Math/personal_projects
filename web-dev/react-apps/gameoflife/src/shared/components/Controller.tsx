@@ -1,37 +1,41 @@
 /**
- * Conway's Game of Life
+ * A general Controller component, currently 'being-planned'
  * @author Benedikt Arnarsson
  */
 
 // Import React
 import React, { useReducer, useEffect, useRef } from 'react';
 
+// Import FontAwesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+
 // Import shared helpers
-// import addHelperName from './addHelperFilename';
+import addHelperName from './addHelperFilename';
 
 // Import shared constants
-// import ADD_CONSTANT_NAME from './addConstantFilename';
+import ADD_CONSTANT_NAME from './addConstantFilename';
 
 // Import shared types
-// import AddSharedTypeName from './AddSharedTypeFilename';
+import AddSharedTypeName from './AddSharedTypeFilename';
 
 // Import shared components
-// import AddSharedComponentName from './AddSharedComponentFilename';
+import AddSharedComponentName from './AddSharedComponentFilename';
 
 // Import helpers
-// import addHelperName from './addHelperFilename';
+import addHelperName from './addHelperFilename';
 
 // Import constants
-// import ADD_CONSTANT_NAME from './addConstantFilename';
+import ADD_CONSTANT_NAME from './addConstantFilename';
 
 // Import types
-// import AddTypeName from './AddSharedTypeFilename';
+import AddTypeName from './AddSharedTypeFilename';
 
 // Import components
-// import AddComponentName from './AddComponentFilename';
+import AddComponentName from './AddComponentFilename';
 
 // Import style
-import './styles.css';
+import './AddNameOfStylesheet.scss';
 
 /*------------------------------------------------------------------------*/
 /*                                  Types                                 */
@@ -55,15 +59,19 @@ type AddCustomTypeName = {
 /*                                Constants                               */
 /*------------------------------------------------------------------------*/
 
-// Could make these more 'reactive' or 'versatile' 
-// Unsure if I should just keep these in the Grid component instead
-const CELL_SIZE = 20;
-const WIDTH = 800;
-const HEIGHT = 600;
+// Add description of constant
+const ADD_CONSTANT_NAME = 'add constant value';
 
 /*------------------------------------------------------------------------*/
 /*                                  State                                 */
 /*------------------------------------------------------------------------*/
+
+/* -------------- Views ------------- */
+
+enum View {
+  // Add description of view
+  AddViewName = 'add-view-name',
+}
 
 /* -------- State Definition -------- */
 
@@ -156,7 +164,7 @@ const addHelperName = (
 /*                                Component                               */
 /*------------------------------------------------------------------------*/
 
-const AddComponentName: React.FC<Props> = (props) => {
+const Controller: React.FC<Props> = (props) => {
   /*------------------------------------------------------------------------*/
   /*                                  Setup                                 */
   /*------------------------------------------------------------------------*/
@@ -303,6 +311,9 @@ const AddComponentName: React.FC<Props> = (props) => {
   /*----------------------------------------*/
   /*                 Main UI                */
   /*----------------------------------------*/
+  // TODO:
+  // Should contain buttons, setters, sliders, etc.
+  // as specified by the props
 
   return (
     <addContainersForBody>
@@ -320,4 +331,5 @@ const AddComponentName: React.FC<Props> = (props) => {
 /*------------------------------------------------------------------------*/
 
 // Export component
-export default AddComponentName;
+export default Controller;
+

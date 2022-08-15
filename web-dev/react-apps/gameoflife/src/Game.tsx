@@ -16,7 +16,9 @@ import React, { useReducer, useEffect, useRef } from 'react';
 // import AddSharedTypeName from './AddSharedTypeFilename';
 
 // Import shared components
-// import AddSharedComponentName from './AddSharedComponentFilename';
+import Cell from './shared/components/Cell';
+import Grid from './shared/components/Grid';
+import Controller from './shared/components/Controller';
 
 // Import helpers
 // import addHelperName from './addHelperFilename';
@@ -31,7 +33,7 @@ import React, { useReducer, useEffect, useRef } from 'react';
 // import AddComponentName from './AddComponentFilename';
 
 // Import style
-import './Game.css';
+// import './styles.css';
 
 /*------------------------------------------------------------------------*/
 /*                                  Types                                 */
@@ -55,19 +57,15 @@ type AddCustomTypeName = {
 /*                                Constants                               */
 /*------------------------------------------------------------------------*/
 
-// Add description of constant
-const ADD_CONSTANT_NAME = 'add constant value';
+// Could make these more 'reactive' or 'versatile' 
+// Unsure if I should just keep these in the Grid component instead
+const CELL_SIZE = 20;
+const WIDTH = 800;
+const HEIGHT = 600;
 
 /*------------------------------------------------------------------------*/
 /*                                  State                                 */
 /*------------------------------------------------------------------------*/
-
-/* -------------- Views ------------- */
-
-enum View {
-  // Add description of view
-  AddViewName = 'add-view-name',
-}
 
 /* -------- State Definition -------- */
 
@@ -160,7 +158,7 @@ const addHelperName = (
 /*                                Component                               */
 /*------------------------------------------------------------------------*/
 
-const Controller: React.FC<Props> = (props) => {
+const AddComponentName: React.FC<Props> = (props) => {
   /*------------------------------------------------------------------------*/
   /*                                  Setup                                 */
   /*------------------------------------------------------------------------*/
@@ -258,20 +256,64 @@ const Controller: React.FC<Props> = (props) => {
   /*------------------------------------------------------------------------*/
 
   /*----------------------------------------*/
+  /*                  Modal                 */
+  /*----------------------------------------*/
+
+  // Modal that may be defined
+  let modal: React.ReactNode;
+
+  /* ------- AddFirstTypeOfModal ------ */
+
+  if (addLogicToDetermineIfModalIsVisible) {
+    // TODO: implement
+
+    // Create modal
+    modal = (
+      <addJSXOfModal />
+    );
+  }
+
+  /*----------------------------------------*/
+  /*                 Views                  */
+  /*----------------------------------------*/
+
+  // Body that will be filled with the current view
+  let body: React.ReactNode;
+
+  /* -------- AddFirstViewName -------- */
+
+  if (view === View.AddViewName) {
+    // TODO: implement
+
+    // Create body
+    body = (
+      <addJSXOfBody />
+    );
+  }
+
+  /* -------- AddSecondViewName -------- */
+
+  if (view === View.AddViewName) {
+    // TODO: implement
+
+    // Create body
+    body = (
+      <addJSXOfBody />
+    );
+  }
+
+  /*----------------------------------------*/
   /*                 Main UI                */
   /*----------------------------------------*/
 
-  // TODO: set this up
   return (
-    <div className="controls">
-      Update every <input value={interval} onChange={this.handleIntervalChange} /> msec
-      {isRunning ?
-          <button className="button" onClick={this.stopGame}>Stop</button> :
-          <button className="button" onClick={this.runGame}>Run</button>
-      }
-      <button className="button" onClick={this.handleRandom}>Random</button>
-      <button className="button" onClick={this.handleClear}>Clear</button>
-    </div>
+    <addContainersForBody>
+      {/* Add Modal */}
+      {modal}
+
+      {/* Add Body */}
+      {body}
+    </addContainersForBody>
   );
 };
 
@@ -280,4 +322,4 @@ const Controller: React.FC<Props> = (props) => {
 /*------------------------------------------------------------------------*/
 
 // Export component
-export default Controller;
+export default AddComponentName;
