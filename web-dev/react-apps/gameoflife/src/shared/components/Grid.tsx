@@ -50,16 +50,12 @@ import Cell from './Cell';
 
 // Props definition
 type Props = {
-  // Add description of required prop
-  addPropName: addPropType,
-  // Add description of optional prop
-  addPropName?: addPropType,
-};
-
-// Add description of custom type
-type AddCustomTypeName = {
-  // Add description of property
-  addCustomPropName: addCustomPropType,
+  // Height of the grid
+  height: number,
+  // Width of the grid
+  width: number,
+  // Cell size
+  cellSize: number,
 };
 
 /*------------------------------------------------------------------------*/
@@ -67,39 +63,17 @@ type AddCustomTypeName = {
 /*------------------------------------------------------------------------*/
 
 // Add description of constant
-const ADD_CONSTANT_NAME = 'add constant value';
+// const ADD_CONSTANT_NAME = 'add constant value';
 
 /*------------------------------------------------------------------------*/
 /*                                  State                                 */
 /*------------------------------------------------------------------------*/
 
-/* -------------- Views ------------- */
-
-enum View {
-  // Add description of view
-  AddViewName = 'add-view-name',
-}
-
 /* -------- State Definition -------- */
 
-type State = (
-  | {
-    // Current view
-    view: View.AddViewName,
-    // Add description of require state variable
-    addStateVariableName: addStateVariableValue,
-    // Add description of optional state variable
-    addStateVariableName?: addStateVariableValue,
-  }
-  | {
-    // Current view
-    view: View.AddViewName,
-    // Add description of require state variable
-    addStateVariableName: addStateVariableValue,
-    // Add description of optional state variable
-    addStateVariableName?: addStateVariableValue,
-  }
-);
+type State = {
+  board: boolean[][],
+};
 
 /* ------------- Actions ------------ */
 
@@ -171,7 +145,7 @@ const addHelperName = (
 /*                                Component                               */
 /*------------------------------------------------------------------------*/
 
-const AddComponentName: React.FC<Props> = (props) => {
+const Grid: React.FC<Props> = (props) => {
   /*------------------------------------------------------------------------*/
   /*                                  Setup                                 */
   /*------------------------------------------------------------------------*/
@@ -335,4 +309,4 @@ const AddComponentName: React.FC<Props> = (props) => {
 /*------------------------------------------------------------------------*/
 
 // Export component
-export default AddComponentName;
+export default Grid;
