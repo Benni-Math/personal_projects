@@ -33,7 +33,7 @@ const numNeighbors2D = (arr: boolean[][], x: number, y: number): number => {
     const yPosition = y + dir[1];
 
     if (isValidPoint2D(arr, xPosition, yPosition) && arr[yPosition][xPosition]) {
-        sum += 1;
+      sum += 1;
     }
   }
 

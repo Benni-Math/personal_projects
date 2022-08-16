@@ -38,7 +38,7 @@ import Controller from './shared/components/Controller';
 /*                                Constants                               */
 /*------------------------------------------------------------------------*/
 
-// Could make these more 'reactive' or 'versatile' 
+// Could make these more 'reactive' or 'versatile'
 const CELL_SIZE = 20;
 const WIDTH = 800;
 const HEIGHT = 600;

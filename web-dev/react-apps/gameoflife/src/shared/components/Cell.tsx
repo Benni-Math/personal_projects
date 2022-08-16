@@ -9,7 +9,6 @@ import React from 'react';
 // Import shared types
 import Color from '../types/Color';
 
-
 /*------------------------------------------------------------------------*/
 /*                                  Types                                 */
 /*------------------------------------------------------------------------*/
@@ -18,14 +17,13 @@ import Color from '../types/Color';
 type Props = {
   // Color of the cell
   color: Color,
-  // Size the cell 
+  // Size the cell
   cellSize: number,
   // Position on x-axis, a.k.a. column number
   x: number,
   // Position on y-axis, a.k.a. row number
   y: number,
 };
-
 
 /*------------------------------------------------------------------------*/
 /*                                Component                               */
