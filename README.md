@@ -1,28 +1,43 @@
 # Ben's Personal Projects
 
-This is a repo for most of my personal projects. 
+This repo has a few purposes:
+ 1. Have notes and learning material which I used when first learning a concept
+ 2. Smaller projects or the start of bigger projects 
+ 3. Miscellaneous code which doesn't fit anywhere else
 
-Currently, I am working on two Rust projects (in the `rust`) folder. Check the
-branches above.
+Check out my other (larger) projects at:
 
-Here is an outline of the folder system (in alphabetical order)
+---
 
-## c-assembly
-Folder with low-level programming stuff, mainly ARM64 assembly, with some C
-stuff planned for the future.
+## Outline of contents of each directory
 
-## docker
-Folder for learning Docker. Contains a couple docker-compose files for different project types. Currently not really in use.
+---
 
-## dotfiles
-My collection of dotfiles (config files), so that I can quickly set up new
-computers.
+### c-assembly
 
-## fp-ts
-Collection of work on functional programming with TypeScript (and JS).
+Contains learning projects and small pieces of C and ARM64 assembly code.
 
-## rust
-Folder for learning Rust along with some small projects. Current most active folder.
+### docker
 
-## web-dev
-General collection of small web-dev projects. Currently less in use.
+Contains a couple docker-compose setups that I don't really use anymore.
+Was a way for me to learn the general setup for docker, but is sort of a junk folder right now.
+
+### go
+
+Learning material for [Go](https://go.dev) along with a small BitTorrent client and a container project.
+
+### new-langs
+
+Contains tiny little bits of code from all kinds of different languages.
+Currently just some [Elixir](https://elixir-lang.org), [Julia](https://julialang.org), and [Pony](https://www.ponylang.io).
+
+### rust
+
+A large collection of smaller [Rust](https://www.rust-lang.org) projects, walk-throughs, and learning material.
+Checkout the README.md in that folder for more details.
+
+### web-dev
+
+Collection of web development related stuff, such as TypeScript, React, Node, Express, and a couple other things.
+More 'mature' web development can be found in my personal website [repo](https://github.com/Benni-Math/personal_website).
+
