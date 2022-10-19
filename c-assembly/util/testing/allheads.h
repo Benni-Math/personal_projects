@@ -1,9 +1,0 @@
-#include <math.h>
-#include <time.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <gsl/gsl_rng.h>
-#include <glib.h>
-#include <sqlite3.h>
-#include <curl/curl.h>
