@@ -7,88 +7,58 @@
 import React, { useReducer, useEffect, useRef } from 'react';
 
 // Import shared helpers
-// import addHelperName from './addHelperFilename';
+import isValidPoint2D from './shared/helpers/isValidPoint2D';
+import numNeighbors2D from './shared/helpers/numNeighbors2D';
 
 // Import shared constants
 // import ADD_CONSTANT_NAME from './addConstantFilename';
 
 // Import shared types
-// import AddSharedTypeName from './AddSharedTypeFilename';
+import Color from './shared/types/Color';
 
 // Import shared components
-// import AddSharedComponentName from './AddSharedComponentFilename';
-
-// Import helpers
-// import addHelperName from './addHelperFilename';
-
-// Import constants
-// import ADD_CONSTANT_NAME from './addConstantFilename';
-
-// Import types
-// import AddTypeName from './AddSharedTypeFilename';
-
-// Import components
-// import AddComponentName from './AddComponentFilename';
+import Cell from './shared/components/Cell';
+import Grid from './shared/components/Grid';
+import Controller from './shared/components/Controller';
 
 // Import style
-import './Game.css';
+// import './styles.css';
 
-/*------------------------------------------------------------------------*/
-/*                                  Types                                 */
-/*------------------------------------------------------------------------*/
-
-// Props definition
-type Props = {
-  // Add description of required prop
-  addPropName: addPropType,
-  // Add description of optional prop
-  addPropName?: addPropType,
-};
-
-// Add description of custom type
-type AddCustomTypeName = {
-  // Add description of property
-  addCustomPropName: addCustomPropType,
-};
+// TODO: The idea is for the Game to be self-contained, and entirely portable (with 'shared' directory)
+// The Controller and Grid will communicate through the Game component,
+// which will also control the logic of Conway's Game of Life
+// The Cells are just a piece within the Grid
+// The Controller is just used as input to change the state within the Game
+// The Grid only displays the state which the Game holds
+//
+// TODO: how should the style be customized in a portable fashion?
+// Might need props for that...
 
 /*------------------------------------------------------------------------*/
 /*                                Constants                               */
 /*------------------------------------------------------------------------*/
 
-// Add description of constant
-const ADD_CONSTANT_NAME = 'add constant value';
+// Could make these more 'reactive' or 'versatile'
+const CELL_SIZE = 20;
+const WIDTH = 800;
+const HEIGHT = 600;
 
 /*------------------------------------------------------------------------*/
 /*                                  State                                 */
 /*------------------------------------------------------------------------*/
 
-/* -------------- Views ------------- */
-
-enum View {
-  // Add description of view
-  AddViewName = 'add-view-name',
-}
+// TODO: should I add a dark-mode and light-mode?
+// enum View = {
+//   Dark: 'dark',
+//   Light: 'light'
+// }
 
 /* -------- State Definition -------- */
 
-type State = (
-  | {
-    // Current view
-    view: View.AddViewName,
-    // Add description of require state variable
-    addStateVariableName: addStateVariableValue,
-    // Add description of optional state variable
-    addStateVariableName?: addStateVariableValue,
-  }
-  | {
-    // Current view
-    view: View.AddViewName,
-    // Add description of require state variable
-    addStateVariableName: addStateVariableValue,
-    // Add description of optional state variable
-    addStateVariableName?: addStateVariableValue,
-  }
-);
+type State = {
+  isRunning: boolean,
+  interval: number,
+};
 
 /* ------------- Actions ------------ */
 
@@ -160,7 +130,7 @@ const addHelperName = (
 /*                                Component                               */
 /*------------------------------------------------------------------------*/
 
-const Controller: React.FC<Props> = (props) => {
+const GameOfLife: React.FC<Props> = (props) => {
   /*------------------------------------------------------------------------*/
   /*                                  Setup                                 */
   /*------------------------------------------------------------------------*/
@@ -258,20 +228,64 @@ const Controller: React.FC<Props> = (props) => {
   /*------------------------------------------------------------------------*/
 
   /*----------------------------------------*/
+  /*                  Modal                 */
+  /*----------------------------------------*/
+
+  // Modal that may be defined
+  let modal: React.ReactNode;
+
+  /* ------- AddFirstTypeOfModal ------ */
+
+  if (addLogicToDetermineIfModalIsVisible) {
+    // TODO: implement
+
+    // Create modal
+    modal = (
+      <addJSXOfModal />
+    );
+  }
+
+  /*----------------------------------------*/
+  /*                 Views                  */
+  /*----------------------------------------*/
+
+  // Body that will be filled with the current view
+  let body: React.ReactNode;
+
+  /* -------- AddFirstViewName -------- */
+
+  if (view === View.AddViewName) {
+    // TODO: implement
+
+    // Create body
+    body = (
+      <addJSXOfBody />
+    );
+  }
+
+  /* -------- AddSecondViewName -------- */
+
+  if (view === View.AddViewName) {
+    // TODO: implement
+
+    // Create body
+    body = (
+      <addJSXOfBody />
+    );
+  }
+
+  /*----------------------------------------*/
   /*                 Main UI                */
   /*----------------------------------------*/
 
-  // TODO: set this up
   return (
-    <div className="controls">
-      Update every <input value={interval} onChange={this.handleIntervalChange} /> msec
-      {isRunning ?
-          <button className="button" onClick={this.stopGame}>Stop</button> :
-          <button className="button" onClick={this.runGame}>Run</button>
-      }
-      <button className="button" onClick={this.handleRandom}>Random</button>
-      <button className="button" onClick={this.handleClear}>Clear</button>
-    </div>
+    <addContainersForBody>
+      {/* Add Modal */}
+      {modal}
+
+      {/* Add Body */}
+      {body}
+    </addContainersForBody>
   );
 };
 
@@ -280,4 +294,4 @@ const Controller: React.FC<Props> = (props) => {
 /*------------------------------------------------------------------------*/
 
 // Export component
-export default Controller;
+export default GameOfLife;

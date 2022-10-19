@@ -5,29 +5,12 @@ const CELL_SIZE = 20;
 const WIDTH = 800;
 const HEIGHT = 600;
 
-class Cell extends React.Component {
-  render() {
-    const { x, y } = this.props;
-    return (
-      <div
-        className="Cell"
-        style={{
-          left: `${CELL_SIZE * x + 1}px`,
-          top: `${CELL_SIZE * y + 1}px`,
-          width: `${CELL_SIZE - 1}px`,
-          height: `${CELL_SIZE - 1}px`,
-        }}
-      />
-    );
-  }
-}
-
 class Game extends React.Component {
   state = {
     cells: [],
     isRunning: false,
     interval: 100,
-  }
+  };
 
   constructor() {
     super();
@@ -39,10 +22,10 @@ class Game extends React.Component {
 
   // Create an empty board
   makeEmptyBoard() {
-    let board = [];
+    const board = [];
 
     for (let y = 0; y < this.rows; y++) {
-      board[y] = []
+      board[y] = [];
       for (let x = 0; x < this.cols; x++) {
         board[y][x] = false;
       }
@@ -53,7 +36,7 @@ class Game extends React.Component {
 
   // Create cells from this.board
   makeCells() {
-    let cells = [];
+    const cells = [];
 
     for (let y = 0; y < this.rows; y++) {
       for (let x = 0; x < this.cols; x++) {
@@ -93,12 +76,12 @@ class Game extends React.Component {
     }
 
     this.setState({ cells: this.makeCells() });
-  }
+  };
 
   runGame = () => {
     this.setState({ isRunning: true });
     this.runIteration();
-  }
+  };
 
   stopGame = () => {
     this.setState({ isRunning: false });
@@ -107,24 +90,22 @@ class Game extends React.Component {
       window.clearTimeout(this.timeoutHandler);
       this.timeoutHandler = null;
     }
-  }
+  };
 
   runIteration() {
-    let newBoard = this.makeEmptyBoard();
+    const newBoard = this.makeEmptyBoard();
 
     for (let y = 0; y < this.rows; y++) {
       for (let x = 0; x < this.cols; x++) {
-        let neighbors = this.calculateNeighbors(this.board, x, y);
+        const neighbors = this.calculateNeighbors(this.board, x, y);
         if (this.board[y][x]) {
           if (neighbors === 2 || neighbors === 3) {
             newBoard[y][x] = true;
           } else {
             newBoard[y][x] = false;
           }
-        } else {
-          if (!this.board[y][x] && neighbors === 3) {
-            newBoard[y][x] = true;
-          }
+        } else if (!this.board[y][x] && neighbors === 3) {
+          newBoard[y][x] = true;
         }
       }
     }
@@ -133,7 +114,7 @@ class Game extends React.Component {
     this.setState({ cells: this.makeCells() });
 
     this.timeoutHandler = window.setTimeout(() => {
-      this.runIteration()
+      this.runIteration();
     }, this.state.interval);
   }
 
@@ -170,12 +151,12 @@ class Game extends React.Component {
 
   handleIntervalChange = (event) => {
     this.setState({ interval: event.target.value });
-  }
+  };
 
   handleClear = () => {
     this.board = this.makeEmptyBoard();
     this.setState({ cells: this.makeCells() });
-  }
+  };
 
   handleRandom = () => {
     for (let y = 0; y < this.rows; y++) {
@@ -185,7 +166,7 @@ class Game extends React.Component {
     }
 
     this.setState({ cells: this.makeCells() });
-  }
+  };
 
   render() {
     const { cells, interval, isRunning } = this.state;
@@ -198,9 +179,11 @@ class Game extends React.Component {
           onClick={this.handleClick}
           ref={(n) => { this.boardRef = n; }}
         >
-          {cells.map(cell => (
-            <Cell x={cell.x} y={cell.y} key={`${cell.x},${cell.y}`} />
-          ))}
+          {cells.map((cell) => {
+            return (
+              <Cell x={cell.x} y={cell.y} key={`${cell.x},${cell.y}`} />
+            );
+          })}
         </div>
 
         {/* <div className="controls">
@@ -213,7 +196,7 @@ class Game extends React.Component {
                     <button className="button" onClick={this.handleClear}>Clear</button>
         </div> */}
       </div>
-    )
+    );
   }
 }
 

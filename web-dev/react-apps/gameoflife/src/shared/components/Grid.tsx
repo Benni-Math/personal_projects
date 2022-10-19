@@ -1,5 +1,16 @@
+// Planned general Grid component
+
+// .Board {
+//   position: relative;
+//   margin: 0 auto;
+//   background-color: #000;
+//   background-image:
+//     linear-gradient(#333 1px, transparent 1px),
+//     linear-gradient(90deg, #333 1px, transparent 1px);
+// }
 /**
- * Conway's Game of Life
+ * Grid component for simulating and playing games.
+ * Depends on the Cell component and Color type.
  * @author Benedikt Arnarsson
  */
 
@@ -13,10 +24,10 @@ import React, { useReducer, useEffect, useRef } from 'react';
 // import ADD_CONSTANT_NAME from './addConstantFilename';
 
 // Import shared types
-// import AddSharedTypeName from './AddSharedTypeFilename';
+import Color from '../types/Color';
 
 // Import shared components
-// import AddSharedComponentName from './AddSharedComponentFilename';
+import Cell from './Cell';
 
 // Import helpers
 // import addHelperName from './addHelperFilename';
@@ -31,7 +42,7 @@ import React, { useReducer, useEffect, useRef } from 'react';
 // import AddComponentName from './AddComponentFilename';
 
 // Import style
-import './styles.css';
+// import './AddNameOfStylesheet.scss';
 
 /*------------------------------------------------------------------------*/
 /*                                  Types                                 */
@@ -39,27 +50,20 @@ import './styles.css';
 
 // Props definition
 type Props = {
-  // Add description of required prop
-  addPropName: addPropType,
-  // Add description of optional prop
-  addPropName?: addPropType,
-};
-
-// Add description of custom type
-type AddCustomTypeName = {
-  // Add description of property
-  addCustomPropName: addCustomPropType,
+  // Height of the grid
+  height: number,
+  // Width of the grid
+  width: number,
+  // Cell size
+  cellSize: number,
 };
 
 /*------------------------------------------------------------------------*/
 /*                                Constants                               */
 /*------------------------------------------------------------------------*/
 
-// Could make these more 'reactive' or 'versatile' 
-// Unsure if I should just keep these in the Grid component instead
-const CELL_SIZE = 20;
-const WIDTH = 800;
-const HEIGHT = 600;
+// Add description of constant
+// const ADD_CONSTANT_NAME = 'add constant value';
 
 /*------------------------------------------------------------------------*/
 /*                                  State                                 */
@@ -67,24 +71,9 @@ const HEIGHT = 600;
 
 /* -------- State Definition -------- */
 
-type State = (
-  | {
-    // Current view
-    view: View.AddViewName,
-    // Add description of require state variable
-    addStateVariableName: addStateVariableValue,
-    // Add description of optional state variable
-    addStateVariableName?: addStateVariableValue,
-  }
-  | {
-    // Current view
-    view: View.AddViewName,
-    // Add description of require state variable
-    addStateVariableName: addStateVariableValue,
-    // Add description of optional state variable
-    addStateVariableName?: addStateVariableValue,
-  }
-);
+type State = {
+  board: boolean[][],
+};
 
 /* ------------- Actions ------------ */
 
@@ -156,7 +145,7 @@ const addHelperName = (
 /*                                Component                               */
 /*------------------------------------------------------------------------*/
 
-const AddComponentName: React.FC<Props> = (props) => {
+const Grid: React.FC<Props> = (props) => {
   /*------------------------------------------------------------------------*/
   /*                                  Setup                                 */
   /*------------------------------------------------------------------------*/
@@ -320,4 +309,4 @@ const AddComponentName: React.FC<Props> = (props) => {
 /*------------------------------------------------------------------------*/
 
 // Export component
-export default AddComponentName;
+export default Grid;
