@@ -1,4 +1,9 @@
-# Ben's Personal Projects
+
+# Ben's Personal Projects (Archive)
+
+**Warning**: this repo is an archive of my old personal projects 'monolith'.
+
+---
 
 This repo has a few purposes:
  1. Have notes and learning material which I used when first learning a concept
